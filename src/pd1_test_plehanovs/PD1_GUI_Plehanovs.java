@@ -9,8 +9,12 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
 
 /**
+ * Galvenā GUI klase — pierakstīšanās un reģistrācijas forma. Pārvalda logu
+ * navigāciju un DB operācijas.
  *
  * @author Maksims Pļehanovs
  */
@@ -19,7 +23,13 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
     private static final String url = "jdbc:derby://localhost:1527/QuizDB";
     private static final String user = "dbuser";
     private static final String password = "dbuser";
-
+    private int attemptCount = 0;
+    /**
+     * Izveido savienojumu ar datu bāzi, izmantojot hardkodētus parametrus.
+     *
+     * @return Connection objekts
+     * @throws SQLException ja savienojums neizdodas
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
@@ -31,6 +41,9 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         initComponents();
     }
 
+    /**
+     * Reprezentē vienu testa jautājumu ar trim atbilžu variantiem.
+     */
     public static class Question {
 
         public int id;
@@ -46,6 +59,12 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Iegūst jautājumu no datu bāzes pēc ID.
+     *
+     * @param questionId jautājuma ID
+     * @return Question objekts vai null ja nav atrasts
+     */
     public Question getQuestionById(int questionId) {
         try (Connection conn = PD1_GUI_Plehanovs.getConnection()) {
             String sql = "SELECT * FROM questions WHERE id = ?";
@@ -66,7 +85,6 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         }
         return null;
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,22 +95,10 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        RegistracijasLogs = new javax.swing.JDialog();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        RegistrationConfirm = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jPasswordField2 = new javax.swing.JPasswordField();
-        jPasswordField3 = new javax.swing.JPasswordField();
         TestaSakumsLogs = new javax.swing.JDialog();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        TestStart = new javax.swing.JButton();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        TestStart2 = new javax.swing.JButton();
         RezultatuLogs = new javax.swing.JDialog();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -121,123 +127,24 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         jCheckBox2 = new javax.swing.JCheckBox();
         jCheckBox3 = new javax.swing.JCheckBox();
         jButton5 = new javax.swing.JButton();
-        OtraJautajumaLogs = new javax.swing.JDialog();
-        jLabel19 = new javax.swing.JLabel();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jButton12 = new javax.swing.JButton();
-        TresaJautajumaLogs = new javax.swing.JDialog();
-        jLabel20 = new javax.swing.JLabel();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jButton13 = new javax.swing.JButton();
-        CeturtaJautajumaLogs = new javax.swing.JDialog();
-        jLabel21 = new javax.swing.JLabel();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jButton14 = new javax.swing.JButton();
-        PiektaJautajumaLogs = new javax.swing.JDialog();
-        jLabel22 = new javax.swing.JLabel();
-        jCheckBox13 = new javax.swing.JCheckBox();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jButton15 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        RegistracijasLogs = new javax.swing.JDialog();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        RegistrationConfirm1 = new javax.swing.JButton();
+        jTextField6 = new javax.swing.JTextField();
+        jTextField7 = new javax.swing.JTextField();
+        jTextField8 = new javax.swing.JTextField();
+        jPasswordField4 = new javax.swing.JPasswordField();
+        jPasswordField5 = new javax.swing.JPasswordField();
+        lietotajvards_jTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         RegistrationButton = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
-
-        RegistracijasLogs.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RegistracijasLogsMouseClicked(evt);
-            }
-        });
-        RegistracijasLogs.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                RegistracijasLogsWindowClosed(evt);
-            }
-        });
-
-        jLabel3.setText("Vārds:");
-
-        jLabel4.setText("Uzvārds:");
-
-        jLabel5.setText("Lietotājvārds:");
-
-        jLabel6.setText("Parole:");
-
-        jLabel7.setText("Parole(atkārtoti):");
-
-        RegistrationConfirm.setText("Reģistrēties");
-        RegistrationConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RegistrationConfirmMouseClicked(evt);
-            }
-        });
-        RegistrationConfirm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RegistrationConfirmActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout RegistracijasLogsLayout = new javax.swing.GroupLayout(RegistracijasLogs.getContentPane());
-        RegistracijasLogs.getContentPane().setLayout(RegistracijasLogsLayout);
-        RegistracijasLogsLayout.setHorizontalGroup(
-            RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RegistracijasLogsLayout.createSequentialGroup()
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RegistracijasLogsLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
-                        .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(RegistracijasLogsLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(RegistrationConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        RegistracijasLogsLayout.setVerticalGroup(
-            RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RegistracijasLogsLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(RegistrationConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        parole_jPasswordField = new javax.swing.JPasswordField();
 
         TestaSakumsLogs.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -245,17 +152,17 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Tests \"Testa nosaukums\"");
+        jLabel31.setText("Tests \"Testa nosaukums\"");
 
-        jLabel9.setText("Meģinājuma skaits: ");
+        jLabel32.setText("Meģinājuma skaits: ");
 
-        TestStart.setText("Sākt testu");
-        TestStart.addMouseListener(new java.awt.event.MouseAdapter() {
+        TestStart2.setText("Sākt testu");
+        TestStart2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 TestStartMouseClicked(evt);
             }
         });
-        TestStart.addActionListener(new java.awt.event.ActionListener() {
+        TestStart2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TestStartActionPerformed(evt);
             }
@@ -268,23 +175,23 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
             .addGroup(TestaSakumsLogsLayout.createSequentialGroup()
                 .addGap(0, 77, Short.MAX_VALUE)
                 .addGroup(TestaSakumsLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(TestStart, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(TestStart2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel31))
                 .addContainerGap(83, Short.MAX_VALUE))
             .addGroup(TestaSakumsLogsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
+                .addComponent(jLabel32)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         TestaSakumsLogsLayout.setVerticalGroup(
             TestaSakumsLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TestaSakumsLogsLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel8)
+                .addComponent(jLabel31)
                 .addGap(34, 34, 34)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addComponent(TestStart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TestStart2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17))
         );
 
@@ -303,6 +210,11 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         jLabel14.setText("Atzīme:");
 
         jButton6.setText("Iesniegt");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Pildīt vēlreiz");
         jButton7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -310,11 +222,21 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
                 jButton7MouseClicked(evt);
             }
         });
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Paradīt Slavas sarakstu");
         jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton8MouseClicked(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -456,11 +378,21 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
                 jButton10MouseClicked(evt);
             }
         });
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setText("Skatīt rezultātus");
         jButton11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton11MouseClicked(evt);
+            }
+        });
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
             }
         });
 
@@ -557,236 +489,97 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        OtraJautajumaLogs.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                OtraJautajumaLogsWindowClosed(evt);
-            }
-        });
-
-        jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel19.setText("2. Jautājums:");
-
-        jCheckBox4.setText("1.Atbilde");
-
-        jCheckBox5.setText("2.Atbilde");
-
-        jCheckBox6.setText("3.Atbilde");
-
-        jButton12.setText("Iesniegt");
-        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+        RegistracijasLogs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton12MouseClicked(evt);
+                RegistracijasLogsMouseClicked(evt);
             }
         });
-
-        javax.swing.GroupLayout OtraJautajumaLogsLayout = new javax.swing.GroupLayout(OtraJautajumaLogs.getContentPane());
-        OtraJautajumaLogs.getContentPane().setLayout(OtraJautajumaLogsLayout);
-        OtraJautajumaLogsLayout.setHorizontalGroup(
-            OtraJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(OtraJautajumaLogsLayout.createSequentialGroup()
-                .addGroup(OtraJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(OtraJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel19))
-                    .addGroup(OtraJautajumaLogsLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(OtraJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(OtraJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox5)
-                            .addComponent(jCheckBox4)
-                            .addComponent(jCheckBox6))))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        OtraJautajumaLogsLayout.setVerticalGroup(
-            OtraJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(OtraJautajumaLogsLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel19)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jCheckBox4)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox5)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox6)
-                .addGap(28, 28, 28)
-                .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        TresaJautajumaLogs.addWindowListener(new java.awt.event.WindowAdapter() {
+        RegistracijasLogs.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                TresaJautajumaLogsWindowClosed(evt);
+                RegistracijasLogsWindowClosed(evt);
             }
         });
 
-        jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel20.setText("3. Jautājums:");
+        jLabel33.setText("Vārds:");
 
-        jCheckBox7.setText("1.Atbilde");
+        jLabel34.setText("Uzvārds:");
 
-        jCheckBox8.setText("2.Atbilde");
+        jLabel35.setText("Lietotājvārds:");
 
-        jCheckBox9.setText("3.Atbilde");
+        jLabel36.setText("Parole:");
 
-        jButton13.setText("Iesniegt");
-        jButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel37.setText("Parole(atkārtoti):");
+
+        RegistrationConfirm1.setText("Reģistrēties");
+        RegistrationConfirm1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton13MouseClicked(evt);
+                RegistrationConfirm1MouseClicked(evt);
+            }
+        });
+        RegistrationConfirm1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegistrationConfirm1ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout TresaJautajumaLogsLayout = new javax.swing.GroupLayout(TresaJautajumaLogs.getContentPane());
-        TresaJautajumaLogs.getContentPane().setLayout(TresaJautajumaLogsLayout);
-        TresaJautajumaLogsLayout.setHorizontalGroup(
-            TresaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TresaJautajumaLogsLayout.createSequentialGroup()
-                .addGroup(TresaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(TresaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel20))
-                    .addGroup(TresaJautajumaLogsLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(TresaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(TresaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox8)
-                            .addComponent(jCheckBox7)
-                            .addComponent(jCheckBox9))))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        TresaJautajumaLogsLayout.setVerticalGroup(
-            TresaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(TresaJautajumaLogsLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel20)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jCheckBox7)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox8)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox9)
-                .addGap(28, 28, 28)
-                .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        CeturtaJautajumaLogs.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                CeturtaJautajumaLogsWindowClosed(evt);
+        jPasswordField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField4ActionPerformed(evt);
             }
         });
 
-        jLabel21.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel21.setText("4. Jautājums:");
-
-        jCheckBox10.setText("1.Atbilde");
-
-        jCheckBox11.setText("2.Atbilde");
-
-        jCheckBox12.setText("3.Atbilde");
-
-        jButton14.setText("Iesniegt");
-        jButton14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton14MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout CeturtaJautajumaLogsLayout = new javax.swing.GroupLayout(CeturtaJautajumaLogs.getContentPane());
-        CeturtaJautajumaLogs.getContentPane().setLayout(CeturtaJautajumaLogsLayout);
-        CeturtaJautajumaLogsLayout.setHorizontalGroup(
-            CeturtaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CeturtaJautajumaLogsLayout.createSequentialGroup()
-                .addGroup(CeturtaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CeturtaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel21))
-                    .addGroup(CeturtaJautajumaLogsLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CeturtaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(CeturtaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox11)
-                            .addComponent(jCheckBox10)
-                            .addComponent(jCheckBox12))))
-                .addContainerGap(59, Short.MAX_VALUE))
+        javax.swing.GroupLayout RegistracijasLogsLayout = new javax.swing.GroupLayout(RegistracijasLogs.getContentPane());
+        RegistracijasLogs.getContentPane().setLayout(RegistracijasLogsLayout);
+        RegistracijasLogsLayout.setHorizontalGroup(
+            RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RegistracijasLogsLayout.createSequentialGroup()
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RegistracijasLogsLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33)
+                            .addComponent(jLabel34)
+                            .addComponent(jLabel35)
+                            .addComponent(jLabel36)
+                            .addComponent(jLabel37))
+                        .addGap(18, 18, 18)
+                        .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordField5, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPasswordField4, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(RegistracijasLogsLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(RegistrationConfirm1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        CeturtaJautajumaLogsLayout.setVerticalGroup(
-            CeturtaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CeturtaJautajumaLogsLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel21)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jCheckBox10)
+        RegistracijasLogsLayout.setVerticalGroup(
+            RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RegistracijasLogsLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel34)
+                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel36)
+                    .addComponent(jPasswordField4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addGroup(RegistracijasLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(jPasswordField5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox11)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox12)
-                .addGap(28, 28, 28)
-                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        PiektaJautajumaLogs.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                PiektaJautajumaLogsWindowClosed(evt);
-            }
-        });
-
-        jLabel22.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel22.setText("5. Jautājums:");
-
-        jCheckBox13.setText("1.Atbilde");
-
-        jCheckBox14.setText("2.Atbilde");
-
-        jCheckBox15.setText("3.Atbilde");
-
-        jButton15.setText("Iesniegt");
-        jButton15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton15MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PiektaJautajumaLogsLayout = new javax.swing.GroupLayout(PiektaJautajumaLogs.getContentPane());
-        PiektaJautajumaLogs.getContentPane().setLayout(PiektaJautajumaLogsLayout);
-        PiektaJautajumaLogsLayout.setHorizontalGroup(
-            PiektaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PiektaJautajumaLogsLayout.createSequentialGroup()
-                .addGroup(PiektaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PiektaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel22))
-                    .addGroup(PiektaJautajumaLogsLayout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(PiektaJautajumaLogsLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(PiektaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox14)
-                            .addComponent(jCheckBox13)
-                            .addComponent(jCheckBox15))))
-                .addContainerGap(59, Short.MAX_VALUE))
-        );
-        PiektaJautajumaLogsLayout.setVerticalGroup(
-            PiektaJautajumaLogsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PiektaJautajumaLogsLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel22)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jCheckBox13)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox14)
-                .addGap(18, 18, 18)
-                .addComponent(jCheckBox15)
-                .addGap(28, 28, 28)
-                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(RegistrationConfirm1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -797,9 +590,9 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        lietotajvards_jTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                lietotajvards_jTextFieldActionPerformed(evt);
             }
         });
 
@@ -848,38 +641,36 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lietotajvards_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(parole_jPasswordField))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lietotajvards_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addGap(34, 34, 34)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                    .addComponent(parole_jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(RegistrationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void lietotajvards_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lietotajvards_jTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void TestStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestStartActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TestStartActionPerformed
+    }//GEN-LAST:event_lietotajvards_jTextFieldActionPerformed
 
     private void RegistrationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationButtonActionPerformed
         // TODO add your handling code here:
@@ -895,107 +686,56 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         this.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
-    private void RegistrationConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrationConfirmMouseClicked
-        RegistracijasLogs.setVisible(false);
-        this.setBounds(0, 0, 400, 350);
-        this.setVisible(false);
-        this.setVisible(true);
-    }//GEN-LAST:event_RegistrationConfirmMouseClicked
+    /**
+     * Apstrādā pieteikšanās pogas klikšķi. Pārbauda lietotājvārdu un paroli
+     * datu bāzē.
+     */
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-         String username = jTextField1.getText();
-    String password = new String(jPasswordField1.getPassword());
-
-    try (Connection conn = getConnection()) {
-
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-
-        ps.setString(1, username);
-        ps.setString(2, password);
-
-        ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ielogošanās veiksmīga!");
-
-            TestaSakumsLogs.setBounds(0, 0, 400, 250);
-            this.setVisible(false);
-            TestaSakumsLogs.setVisible(true);
-
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Nepareizs lietotājvārds vai parole!");
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
+String login = lietotajvards_jTextField.getText();
+String password = new String(parole_jPasswordField.getPassword());
+    Test test = new Test();
+    if (test.login(login, password)) {
+        JOptionPane.showMessageDialog(this, "Veiksmīga ielogošanā!");
+        TestaSakumsLogs.setBounds(0, 0, 400, 400);
+        TestaSakumsLogs.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Nepareizs lietotājvārds vai parole!");
     }
     }//GEN-LAST:event_jButton1MouseClicked
-
-    private void TestaSakumsLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_TestaSakumsLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_TestaSakumsLogsWindowClosed
-
-    private void TestStartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TestStartMouseClicked
-        TestaSakumsLogs.setVisible(false);
-        PirmaJautajumaLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        PirmaJautajumaLogs.setVisible(true);
-    }//GEN-LAST:event_TestStartMouseClicked
-
-    private void RegistracijasLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_RegistracijasLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_RegistracijasLogsWindowClosed
-
-    private void RegistrationConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationConfirmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RegistrationConfirmActionPerformed
-
-    private void RegistracijasLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistracijasLogsMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RegistracijasLogsMouseClicked
-
-    private void OtraJautajumaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_OtraJautajumaLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_OtraJautajumaLogsWindowClosed
-
-    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
-        OtraJautajumaLogs.setVisible(false);
-        TresaJautajumaLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        TresaJautajumaLogs.setVisible(true);    }//GEN-LAST:event_jButton12MouseClicked
 
     private void PirmaJautajumaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_PirmaJautajumaLogsWindowClosed
         this.setVisible(true);
     }//GEN-LAST:event_PirmaJautajumaLogsWindowClosed
-
+private Test currentTest = new Test();
+private Students currentStudent = new Students();
+private int currentQuestionIndex = 0;
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+/**
+     * Apstrādā atbildes iesniegšanu.
+     * Pārbauda izvēlēto atbildi, palielina jautājumu indeksu
+     * un pāriet uz nākamo jautājumu vai rāda rezultātus.
+     */
+    String selectedAnswer = "";
+    if (jCheckBox1.isSelected()) selectedAnswer = jCheckBox1.getText();
+    else if (jCheckBox2.isSelected()) selectedAnswer = jCheckBox2.getText();
+    else if (jCheckBox3.isSelected()) selectedAnswer = jCheckBox3.getText();
+
+
+    Jautajumi question = currentTest.getQuestion(currentQuestionIndex);
+    currentStudent.getAnswers(question, selectedAnswer);
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < currentTest.getQuestionCount()) {
+
+        loadQuestionToDialog(currentQuestionIndex);
+    } else {
+
         PirmaJautajumaLogs.setVisible(false);
-        OtraJautajumaLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        OtraJautajumaLogs.setVisible(true);
+        showResult();
+    }
     }//GEN-LAST:event_jButton5MouseClicked
-
-    private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
-        TresaJautajumaLogs.setVisible(false);
-        CeturtaJautajumaLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        CeturtaJautajumaLogs.setVisible(true);
-    }//GEN-LAST:event_jButton13MouseClicked
-
-    private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
-        CeturtaJautajumaLogs.setVisible(false);
-        PiektaJautajumaLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        PiektaJautajumaLogs.setVisible(true);
-    }//GEN-LAST:event_jButton14MouseClicked
-
-    private void jButton15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton15MouseClicked
-        PiektaJautajumaLogs.setVisible(false);
-        RezultatuLogs.setBounds(0, 0, 400, 300);
-        this.setVisible(false);
-        RezultatuLogs.setVisible(true);
-    }//GEN-LAST:event_jButton15MouseClicked
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
         RezultatuLogs.setVisible(false);
@@ -1012,7 +752,8 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton9MouseClicked
 
     private void RezultatuLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_RezultatuLogsWindowClosed
-        this.setVisible(true);
+       IzvelesLogs.setBounds(0, 0, 400, 400);
+    IzvelesLogs.setVisible(true);
     }//GEN-LAST:event_RezultatuLogsWindowClosed
 
     private void SlavasSarakstaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_SlavasSarakstaLogsWindowClosed
@@ -1023,34 +764,31 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
         this.setVisible(true);
     }//GEN-LAST:event_IzvelesLogsWindowClosed
 
-    private void TresaJautajumaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_TresaJautajumaLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_TresaJautajumaLogsWindowClosed
-
-    private void CeturtaJautajumaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_CeturtaJautajumaLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_CeturtaJautajumaLogsWindowClosed
-
-    private void PiektaJautajumaLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_PiektaJautajumaLogsWindowClosed
-        this.setVisible(true);
-    }//GEN-LAST:event_PiektaJautajumaLogsWindowClosed
-
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton7MouseClicked
-        SlavasSarakstaLogs.setVisible(false);
-        IzvelesLogs.setBounds(0, 0, 400, 400);
-        this.setVisible(false);
-        IzvelesLogs.setVisible(true);
+    RezultatuLogs.setVisible(false);
+    IzvelesLogs.setBounds(0, 0, 400, 400);
+    IzvelesLogs.setVisible(true);
     }//GEN-LAST:event_jButton7MouseClicked
 
     private void jButton10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton10MouseClicked
-        IzvelesLogs.setVisible(false);
-        PirmaJautajumaLogs.setBounds(0, 0, 400, 400);
-        this.setVisible(false);
-        PirmaJautajumaLogs.setVisible(true);
+if (attemptCount >= 3) {
+        JOptionPane.showMessageDialog(null, "Jūs esat izmantojis visus 3 mēģinājumus!");
+        return;
+    }
+
+    attemptCount++;
+    currentQuestionIndex = 0;
+    currentStudent = new Students();
+    loadQuestionToDialog(currentQuestionIndex);
+
+    IzvelesLogs.setVisible(false);
+    PirmaJautajumaLogs.setBounds(0, 0, 400, 300);
+    PirmaJautajumaLogs.setVisible(true);
     }//GEN-LAST:event_jButton10MouseClicked
 
     private void jButton11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton11MouseClicked
@@ -1063,6 +801,175 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        RezultatuLogs.setVisible(false);
+        PirmaJautajumaLogs.setBounds(0, 0, 400, 300);
+        this.setVisible(false);
+        PirmaJautajumaLogs.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        IzvelesLogs.setVisible(false);
+        PirmaJautajumaLogs.setBounds(0, 0, 400, 300);
+        this.setVisible(false);
+        PirmaJautajumaLogs.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void TestaSakumsLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_TestaSakumsLogsWindowClosed
+        this.setVisible(true);
+    }//GEN-LAST:event_TestaSakumsLogsWindowClosed
+
+    private void TestStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestStartActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TestStartActionPerformed
+
+    private void TestStartMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TestStartMouseClicked
+    currentTest.loadQuestionsFromDB(1);
+
+    if (currentTest.getQuestionCount() == 0) {
+        JOptionPane.showMessageDialog(null, "Nav jautājumu datubāzē!");
+        return;
+    }
+
+    attemptCount = 1; 
+    currentQuestionIndex = 0;
+    currentStudent = new Students();
+    loadQuestionToDialog(currentQuestionIndex);
+
+    TestaSakumsLogs.setVisible(false);
+    this.setVisible(false);
+    PirmaJautajumaLogs.setBounds(0, 0, 400, 300);
+    PirmaJautajumaLogs.setVisible(true);
+    }//GEN-LAST:event_TestStartMouseClicked
+private void loadQuestionToDialog(int index) {
+    Jautajumi q = currentTest.getQuestion(index);
+    java.util.List<String> options = q.getAnswerOptions();
+
+    jLabel10.setText((index + 1) + ". " + q.getText());
+    jCheckBox1.setText(options.size() > 0 ? options.get(0) : "");
+    jCheckBox2.setText(options.size() > 1 ? options.get(1) : "");
+    jCheckBox3.setText(options.size() > 2 ? options.get(2) : "");
+
+   
+    jCheckBox1.setSelected(false);
+    jCheckBox2.setSelected(false);
+    jCheckBox3.setSelected(false);
+}
+
+private void showResult() {
+   int percent = currentStudent.getPercent();
+    int grade   = currentStudent.getGrade();
+    int right   = currentStudent.getRightAnswers();
+    int total   = currentStudent.getQuestionsCount();
+
+    jLabel12.setText("Lietotājs: ");
+    jLabel13.setText("Procenti: " + percent + "%");
+    jLabel14.setText("Atzīme: " + grade);
+
+  
+    int remaining = 3 - attemptCount;
+    jLabel18.setText("Mēģinājumu skaits: " + remaining + " atlikuši");
+
+
+    jButton7.setVisible(remaining > 0);
+
+    PirmaJautajumaLogs.setVisible(false);
+    RezultatuLogs.setBounds(0, 0, 400, 400);
+    RezultatuLogs.setVisible(true);
+}
+    /**
+     * Apstrādā reģistrācijas pogas klikšķi reģistrācijas formā. Pārbauda
+     * ievades datus, lietotājvārda unikālumu un saglabā jauno lietotāju DB.
+     */
+
+    private void RegistrationConfirm1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrationConfirm1MouseClicked
+        String vards = jTextField6.getText().trim();
+        String uzvards = jTextField7.getText().trim();
+        String lietotajvards = jTextField8.getText().trim();
+        String parole = new String(jPasswordField4.getPassword()).trim();
+        String paroleAtk = new String(jPasswordField5.getPassword()).trim();
+
+        // Pārbaude vai visi lauki ir aizpildīti
+        if (vards.isEmpty() || uzvards.isEmpty() || lietotajvards.isEmpty() || parole.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Lūdzu aizpildiet visus laukus!");
+            return;
+        }
+
+        // Pārbaude vai paroles sakrīt
+        if (!parole.equals(paroleAtk)) {
+            JOptionPane.showMessageDialog(this, "Paroles nesakrīt!");
+            return;
+        }
+
+        try (Connection conn = DBConnection.getConnection()) {
+            // Pārbaude vai lietotājvārds jau eksistē
+            String checkSql = "SELECT COUNT(*) FROM APP.LIETOTAJI WHERE LIETOTAJVARDS = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, lietotajvards);
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            if (rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(this, "Lietotājvārds jau eksistē!");
+                return;
+            }
+
+            // Ieraksta jauno lietotāju
+            String maxIdSql = "SELECT COALESCE(MAX(ID), 0) + 1 FROM APP.LIETOTAJI";
+            PreparedStatement maxStmt = conn.prepareStatement(maxIdSql);
+            ResultSet maxRs = maxStmt.executeQuery();
+            maxRs.next();
+            int newId = maxRs.getInt(1);
+
+            String sql = "INSERT INTO APP.LIETOTAJI (ID, VARDS, UZVARDS, LIETOTAJVARDS, PAROLE) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, newId);
+            stmt.setString(2, vards);
+            stmt.setString(3, uzvards);
+            stmt.setString(4, lietotajvards);
+            stmt.setString(5, parole);
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Reģistrācija veiksmīga!");
+            RegistracijasLogs.setVisible(false);
+            this.setVisible(true);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Kļūda reģistrācijā: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_RegistrationConfirm1MouseClicked
+
+    private void RegistrationConfirm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegistrationConfirm1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegistrationConfirm1ActionPerformed
+
+    private void jPasswordField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField4ActionPerformed
+
+    private void RegistracijasLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistracijasLogsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegistracijasLogsMouseClicked
+
+    private void RegistracijasLogsWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_RegistracijasLogsWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegistracijasLogsWindowClosed
 
     /**
      * @param args the command line arguments
@@ -1101,46 +1008,26 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDialog CeturtaJautajumaLogs;
     private javax.swing.JDialog IzvelesLogs;
-    private javax.swing.JDialog OtraJautajumaLogs;
-    private javax.swing.JDialog PiektaJautajumaLogs;
     private javax.swing.JDialog PirmaJautajumaLogs;
     private javax.swing.JDialog RegistracijasLogs;
     private javax.swing.JButton RegistrationButton;
-    private javax.swing.JButton RegistrationConfirm;
+    private javax.swing.JButton RegistrationConfirm1;
     private javax.swing.JDialog RezultatuLogs;
     private javax.swing.JDialog SlavasSarakstaLogs;
-    private javax.swing.JButton TestStart;
+    private javax.swing.JButton TestStart2;
     private javax.swing.JDialog TestaSakumsLogs;
-    private javax.swing.JDialog TresaJautajumaLogs;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1151,29 +1038,25 @@ public class PD1_GUI_Plehanovs extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JPasswordField jPasswordField3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JPasswordField jPasswordField4;
+    private javax.swing.JPasswordField jPasswordField5;
+    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextField7;
+    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField lietotajvards_jTextField;
+    private javax.swing.JPasswordField parole_jPasswordField;
     // End of variables declaration//GEN-END:variables
 }

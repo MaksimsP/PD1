@@ -3,43 +3,43 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package pd1_test_plehanovs;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
-import java.io.InputStream;
+import java.io.FileInputStream;
 
 /**
+ * Klase nodrošina savienojumu ar Derby datu bāzi. Konfigurācija tiek nolasīta
+ * no config.properties faila.
  *
  * @author Maksims Pļehanovs
  */
 public class DBConnection {
 
-    private static Connection connection;
+    /**
+     * Izveido un atgriež savienojumu ar datu bāzi. Nolasa parametrus (url,
+     * lietotājs, parole) no config.properties.
+     *
+     * @return Connection objekts vai null, ja savienojums neizdevās
+     */
+    public static Connection getConnection() {
+        Connection conn = null;
 
-    public static Connection getConnection() throws Exception {
-
-        if (connection == null || connection.isClosed()) {
-
-            // 1. Ielādē properties failu
+        try {
             Properties props = new Properties();
-            InputStream input = DBConnection.class
-                    .getClassLoader()
-                    .getResourceAsStream("config.properties");
+            props.load(DBConnection.class.getClassLoader().getResourceAsStream("pd1_test_plehanovs/config.properties"));
 
-            if (input == null) {
-                throw new RuntimeException("config.properties fails nav atrasts");
-            }
-            props.load(input);
-
-            // 2. Nolasa parametrus
             String url = props.getProperty("db.url");
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
-            // 3. Izveido savienojumu
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Savienojums ar datu bāzi veiksmīgi izveidots!");
+            conn = DriverManager.getConnection(url, user, password);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return connection;
+
+        return conn;
     }
 }
